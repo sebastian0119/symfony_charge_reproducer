@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html class="bg-blue-300">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         {% endblock %}
 
         {% block javascripts %}
@@ -12,6 +13,103 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- ===== Sidebar Start ===== -->
+        <aside class="static left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black">
+            <!-- SIDEBAR HEADER -->
+            <div class="flex items-center justify-between gap-2 px-6 py-5.5">
+                <a href="/" class="mt-5">
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo" />
+                </a>
+            </div>
+            <!-- SIDEBAR HEADER -->
+
+        <div class="no-scrollbar flex flex-col overflow-y-auto">
+        <!-- Sidebar Menu -->
+            <nav class="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
+            <!-- Menu Group -->
+                <div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <h3 class="mb-4 font-bold text-white">MENU</h3>
+                {% set menu = knp_menu_get('main_menu', [], {include_homepage: false}) %}
+                <!-- TODO: {{ knp_menu_render(menu, {'allow_safe_labels': true}) }} -->
+                {{ knp_menu_render(menu) }}
+                {% endif %}
+                </div>
+            </nav>
+        <!-- Sidebar Menu -->
+        </div>
+        </aside>
+        <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <!-- ===== Header Start ===== -->
+        <header class="sticky top-0 z-999 flex w-full bg-white">
+        <div class="flex flex-grow items-center justify-between px-4 py-4">
+            
+            <div class="not-prose flex">
+                {{ ux_icon('tabler:code', {height: '18px', width: '18px', fill: '#64748b', 'aria-label': 'Coded'}) }}
+                <!-- TODO: This is just here to keep the user box on the right; but should be fixed -->
+                <p class="not-prose text-sm text-slate-500 px-1">with</p>
+                {{ ux_icon('tabler:heart', {height: '18px', width: '18px', fill: '#64748b', 'aria-label': 'love'}) }}
+                <p class="not-prose text-sm text-slate-500 px-1">by Sebastian Klus. © 2024</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <!-- User Area -->
+                {% set login_user = 'anonymous' %}
+                {% set login_text = 'Login' %}
+                {% set login_link = 'app_login' %}
+                {# Check if user is logged in #}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% set login_user = app.user.name ~ ' ' ~ app.user.surname %}
+                    {% set login_text = 'Logout' %}
+                    {% set login_link = '_logout_main' %}
+                {% endif %}
+                <div class="relative flex items-center gap-4">
+                    <span class="text-right">
+                        <span class="block text-sm font-medium text-black">{{ login_user }}</span>
+                        <a href="{{ path(login_link) }}"><span class="block text-xs font-medium">{{ login_text }}</span></a>
+                    </span>
+                    <span class="h-12 w-12 rounded-full">
+                        {{ ux_icon('tabler:user-square-rounded', {height: '48px', width: '48px', class: 'not-prose'}) }}
+                    </span>
+                </div>
+                <!-- User Area -->
+            </div>
+        </div>
+        </header>
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+            <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                <div class="grid grid-cols-3 gap-4">
+                    <!-- Card Item Start -->
+                    <div class="rounded-md col-span-2 border border-stroke bg-white px-7.5 py-6">
+                        <!-- "prose" is normally limiting content width (max-w-prose) -->
+                        <!-- here: limitation is lifted and set as required in upcoming content elements -->
+                        <div class="prose mx-5 max-w-none">
+                        {% block contentleft %}{% endblock %}
+                        </div>
+                    </div>
+                    <div class="rounded-md col-span-1 border border-stroke bg-white px-7.5 py-6">
+                        <div class="prose mx-5">
+                        {% block contentright %}{% endblock %}
+                        </div>
+                    </div>
+                    <!-- Card Item End -->
+                </div>
+            </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    {% block javascript %}{% endblock %}
     </body>
 </html>

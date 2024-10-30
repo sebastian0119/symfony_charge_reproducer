@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Charge{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/desfasado.js') }}"></script>
+{% endblock %}
+
+{% block contentleft %}
+    <h1 class="title">Create new Charge</h1>
+    {{ component('NoteRequired') }}
+
+    {{ include('charge/_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,52 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} 
+    {{ form_widget(form) }}
+    <button class="btn btn-primary mt-2">{{ button_label|default('Save') }}</button>
+    {# TODO: Figure out how to change the button label to 'Update' when in import form #}
+    <a href="{{ path('app_charge_index') }}" class="not-prose btn btn-secondary mt-2">{% trans %}button.return{% endtrans %}</a>
+{{ form_end(form) }}
+
+{% block javascript %}
+<script>
+
+// Fields that will be modified dynamically
+const selectCompany = document.getElementById("charge_Company");
+const selectProject = document.getElementById("charge_Project");
+const selectSubcontract = document.getElementById("charge_Subcontract");
+
+// Updating Projects and Subcontracts, based on selected Company
+selectCompany.addEventListener("change", () => {
+    const target = 'charge_Project';
+    var url = '/charge/ajax/projects' + '?company=' + selectCompany.value;
+    if (!selectCompany.value) {
+        selectProject.disabled = true;
+        selectProject.innerHTML = '<option value="">-- Select company --</option>';
+        selectSubcontract.disabled = true;
+        selectSubcontract.innerHTML = '<option value="">-- Select project --</option>';
+        return 1;
+    }
+    // TODO: change name of tableFetch to something like fetchContent or similar
+    tableFetch(url, target);
+    selectProject.disabled = false;
+});
+
+// Updating Subcontracts, based on selected Project
+selectProject.addEventListener("change", () => {
+    const target = 'charge_Subcontract';
+    var url = '/charge/ajax/subcontracts' + '?project=' + selectProject.value + '&company=' + selectCompany.value;
+    if (!selectProject.value) {
+        selectSubcontract.disabled = true;
+        selectSubcontract.innerHTML = '<option value="">-- Select project --</option>';
+        return 1;
+    }
+    // TODO: change name of tableFetch to something like fetchContent or similar
+    tableFetch(url, target);
+    selectSubcontract.disabled = false;
+});
+
+// Script executed at the end of page load
+// Disable some field when page is loaded; will be enabled dynamically
+selectProject.disabled = true;
+selectSubcontract.disabled = true;
+
+</script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Import Charge{% endblock %}
+
+{% block contentleft %}
+    <h1>Import new Charge</h1>
+    {{ component('NoteRequired') }}
+
+    {{ include('charge/_form.html.twig', {'button_label': 'button.import' | trans }) }}
+{% endblock %}

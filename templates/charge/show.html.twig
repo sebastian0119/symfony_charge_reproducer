@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Charge{% endblock %}
+
+{% block contentleft %}
+    <h1>{{ charge.company.name }} #{{ "%04d"|format(charge.Number) }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Issued on</th>
+                <td>{{ charge.Date ? charge.Date|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Contract</h2>
+    <table>
+            <th>Project</th>
+            <td>{{ charge.project.name }}</td>
+        </tr>
+        <tr>
+            <th>Contract</th>
+            <td>{{ charge.subcontract.description }}</td>
+        </tr>
+    </table>
+
+    <h2>Lines</h2>
+    <table>
+        <tr>
+            <th>Description</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Tax</th>
+            <th class="text-right">Total</th>
+        </tr>
+        <tr>
+            <td>{{ charge.description }}</td>
+            <td class="text-right">{{charge.currency.symbol }} {{ charge.amount|number_format(2) }}</td>
+            <td class="text-right">+ {{charge.currency.symbol }} {{ charge.taxAmount|number_format(2) }}</td>
+            <td class="text-right">= {{ 0|number_format(2) }}</td>
+        </tr>
+    </table>
+    <p><span class="font-bold">Comment:</span> {{ charge.Comment }}</p>
+
+    <a href="{{ path('app_charge_index') }}" class="not-prose btn btn-primary">{% trans %}button.return{% endtrans %}</a>
+    {# TODO: offer Edit button only, if charge has not been transmitted #}
+    <a href="{{ path('app_charge_edit', {'id': charge.id}) }}" class="not-prose btn btn-secondary">{% trans %}button.edit{% endtrans %}</a>
+
+    {# {{ include('charge/_delete_form.html.twig') }} #}
+{% endblock %}
+
+{% block contentright %}
+
+    <h2>Treasury</h2>
+    <table>
+        <tbody>
+            <tr>
+                <th>Transmit status</th>
+                <td>{{ charge.Transmit }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ charge.Code is null or charge.Code is empty ? 'pending' : charge.Code }}</td>  
+            </tr>
+            <tr>
+                <th>Reply</th>
+                <td>{{ charge.Reply }}</td>
+            </tr>
+            <tr>
+                <th>RegisteredBy</th>
+                <td>{{ charge.RegisteredBy }}</td>
+            </tr>
+            <tr>
+                <th>RegisteredOn</th>
+                <td>{{ charge.RegisteredOn ? charge.RegisteredOn|date('d/m/Y H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,5 +1,9 @@
 twig:
     file_name_pattern: '*.twig'
+    form_themes: ['form/custom_form.html.twig']
+    # Register your global variables
+    globals:
+        app_company_name: '%env(APP_COMPANY_NAME)%'
 
 when@test:
     twig:

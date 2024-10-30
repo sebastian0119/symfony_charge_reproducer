@@ -1,0 +1,36 @@
+<table class="table is-striped is-hoverable">
+    <thead>
+        <tr>
+            <th>#</th> {#~ ID ~#}
+            <th>Date</th>
+            <th>Company</th>
+            <th>Project</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>&nbsp;</th> {#~ more ~#}
+            <th>&nbsp;</th> {#~ edit ~#}
+        </tr>
+    </thead>
+    <tbody>
+    {%- for charge in charges ~%}
+        <tr>
+            <td><a href="{{ path('app_charge_show', {'id': charge.id}) }}">{{ "%04d"|format(charge.number) }}</td>
+            <td>{{ charge.date ? charge.date|date('d/m/Y') : '' }}</td>
+            <td>{{ charge.company.name }}</td>
+            <td>{{ charge.subcontract.contract.project.name }}</td>
+            <td class="text-right">{{ charge.currency.symbol }} {{ charge.amount|number_format(2) }}</td>
+            <td>{{ charge.status.description }}</td>
+            <td class="not-prose"><a href="{{ path('app_charge_show', {'id': charge.id}) }}">{{ ux_icon('tabler:info-circle-filled', {height: '20px', width: '20px'}) }}</a></td>
+            <td class="not-prose"><a href="{{ path('app_charge_edit', {'id': charge.id}) }}">{{ ux_icon('tabler:pencil', {height: '20px', width: '20px'}) }}</a></td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="not-prose">
+    {{ knp_pagination_render(charges) }}
+</div>

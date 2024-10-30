@@ -1,0 +1,8 @@
+<option value="">-- Please select --</option>
+{%- for option in options ~%}
+{% set selected = '' %}
+{% if preselected == option.id %}
+    {%- set selected = 'selected="selected"' -%}
+{% endif %}
+<option value="{{ option.id }}" {{ selected|raw }}>{{ option.description }}</option>
+{%- endfor -%}

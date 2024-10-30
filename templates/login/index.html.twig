@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login form{% endblock %}
+
+{% block contentleft %}
+    {# TODO: define error sections for ALL forms in this project #}
+    {% if error %}
+        <div class="not-prose bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+        <p class="font-bold">An error occured:</p>
+        <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        </div>
+    {% endif %}
+
+<h2>Login required</h2><p>Please log in first:</p>
+<form action="{{ path('app_login') }}" method="post">
+    
+    <label class="font-semibold" for="username">Username:</label>
+    <input class="rounded-md" type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
+
+    <label class="font-semibold" for="password">Password:</label>
+    <input class="rounded-md" type="password" id="password" name="_password" required>
+    
+    {# If you want to control the URL the user is redirected to on success
+    <input class="input" type="hidden" name="_target_path" value="/account"/> #}
+    <button class="not-prose btn btn-primary" type="submit">{% trans %}button.login{% endtrans %}</button>
+</form>
+
+<p><a href="{{ path('app_forgot_password_request') }}">Reset password</a></p>
+
+{% endblock %}

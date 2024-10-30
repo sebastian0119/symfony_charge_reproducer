@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}title.charges{% endtrans %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/desfasado.js') }}"></script>
+{% endblock %}
+
+{% block contentleft %}
+    <div class="flow-root">
+    <h1 class="float-left">{% trans %}title.charges{% endtrans %}</h1>
+    <a class="not-prose float-right btn btn-primary" href="{{ path('app_charge_import') }}">+ {% trans %}button.add{% endtrans %}</a>
+    </div>
+
+    <form>
+    <div class="flex">
+        <input id="searchInput" class="flex-initial w-96 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" placeholder="{% trans %}search.charge{% endtrans %}" />
+        
+        <button type="submit" class="not-prose flex-initial w-28 p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+        <a id="searchReset">{% trans %}button.reset{% endtrans %}</a>
+    </button>
+    </div>
+    <select id="searchStatus" class="bg-gray-50 border border-gray-300 text-sm rounded-lg mt-2">
+        <option value="0">-- Charge status --</option>
+        <option value="1">Pending</option>
+        <option value="2">Paid</option>
+    </select>
+    </form>
+
+    <div id="ajaxTable">
+    {% include 'charge/_table.html.twig' %}
+    </div>
+    
+{% endblock %}
+
+{% block javascript %}
+<script>
+/**
+ * Basic information needed for umbrellaFetch() request at /js/desfasado.js
+ * @param {String} target  - element where the content of the response is inserted into (including #)
+ * @param {String} baseurl - URL where the request is directed to, including GET parameters (e.g. name=xyz&city=abc)
+ */
+const target  = 'ajaxTable';
+const baseurl = '/charge/';
+
+/**
+ * Event handlers
+ */
+var btnSearchReset = document.getElementById("searchReset");
+var inpSearchInput = document.getElementById("searchInput");
+var selSearchStatus = document.getElementById("searchStatus");
+
+btnSearchReset.addEventListener("click", () => {
+    inpSearchInput.value = '';
+    selSearchStatus.value = 0;
+    tableFetch(baseurl, target);
+});
+
+inpSearchInput.addEventListener("keyup", () => {
+    searchCharge();
+});
+
+selSearchStatus.addEventListener("change", () => {
+    searchCharge();
+});
+
+function searchCharge() {
+    var searchString = inpSearchInput.value;
+    var searchStatus = selSearchStatus.value;
+    var url = baseurl + '?searchString=' + searchString + '&searchStatus=' + searchStatus;
+    tableFetch(url, target);
+}
+
+</script>
+{% endblock %}

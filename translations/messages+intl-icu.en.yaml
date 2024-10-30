@@ -1,0 +1,67 @@
+button.add: Add
+button.addline: 'Add line'
+button.charge.add: 'Add charge'
+button.contract.add: 'Add contract'
+button.deleteline: 'Delete line'
+button.edit: Edit
+button.import: Import
+button.index: Index
+button.invoice.add: 'Create invoice'
+button.login: Login
+button.more: More
+button.reset: Reset
+button.return: Return
+button.return.index: 'Return to index'
+button.save: Save
+button.subcontract.add: 'Add subcontract'
+button.tracker.authorize: Authorize
+button.tracker.filter: 'Update filter'
+menu.charge: Charges
+menu.charge.add: 'Register charge'
+menu.company: Companies
+menu.invoice: Invoices
+menu.invoice.add: 'Create invoice'
+menu.project: Projects
+menu.taxexemption: 'Tax exemptions'
+menu.tracker: Trackers
+menu.tracker.authorize: 'Authorize trackers'
+menu.tracker.summary: 'Tracker summary'
+menu.user: Users
+search.charge: 'TODO: Search by charge number'
+search.company: 'TODO: Search by name'
+search.invoice: 'TODO: Search by invoice number'
+search.project: 'TODO: Search by project name'
+search.subcontract: 'TODO: Search by company name'
+search.taxexemption: 'TODO: Search by something'
+search.tracker: 'TODO: Search by name'
+search.user: 'TODO: Search by name'
+table.contract.empty: 'No contracts available'
+table.email: E-Mail
+table.empty: empty
+table.fax: Fax
+table.name: Name
+table.phone1: 'Phone 1'
+table.phone2: 'Phone 2'
+table.surname: Surname
+table.username: Username
+title.charges: Charges
+title.company.information: 'General information'
+title.companies: Companies
+title.contract: Contract
+title.contracts: Contracts
+title.invoices: Invoices
+title.legend: Legend
+title.project: Project
+title.project.information: 'Project information'
+title.project.location: 'Project location'
+title.project.property: 'Property information'
+title.projects: Projects
+title.subcontracts: Subcontracts
+title.taxexemptions: 'Tax exemptions'
+title.tracker: Tracker
+title.tracker.pending: 'Pending trackers'
+title.trackers: Trackers
+title.user: User
+title.user.add: Add user
+title.user.edit: Edit user
+title.users: Users
