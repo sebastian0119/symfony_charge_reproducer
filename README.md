@@ -8,5 +8,7 @@ This repository includes all relevant information to reproduce the error message
 
 You will need connection to a database that contains some basic information; migrations for MariaDB / MySQL are included.
 
-The relevant route is `https://localhost:8000/charge/new` (with the built-in Symfony server).
+The relevant route is `https://localhost:8000/charge/new` (with the built-in Symfony server). 
+
+To reproduce, just add some information into the form and leave out any required field; the error message for the field(s) you left out will pop up at the beginning of the form.
 
